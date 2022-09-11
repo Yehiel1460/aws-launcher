@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-    - master
+    - main
 
 jobs:
   deploy_lambda:
@@ -27,4 +27,4 @@ jobs:
       - name: deploy
         run: |
           zip -j deploy.zip ./*
-          aws lambda update-function-code --function-name=lambda-gh-action --zip-file=fileb://deploy.zip
+          aws lambda update-function-code --function-name=aws-launcher-test --zip-file=fileb://deploy.zip
