@@ -23,7 +23,7 @@ let data
   const response = {
     statusCode: 200,
     body: JSON.stringify(data.Functions.map((func)=>{
-      return (func.FunctionName)
+      return {url: "https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/" + func.FunctionName, name: func.FunctionName}
     }))
   };
   return response;
