@@ -2,8 +2,8 @@ const AWS = require("aws-sdk");
 exports.handler = async (event) => {
   AWS.config.update({
     MasterRegion: "us-east-1",
-    accessKeyId: "AKIAWXJTZ6P7OHXTK4XL",
-    secretAccessKey: "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",
+    accessKeyId: "",
+    secretAccessKey: "",
   });
   const lambda = new AWS.Lambda();
   const params = {
