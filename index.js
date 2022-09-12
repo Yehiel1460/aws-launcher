@@ -8,8 +8,6 @@ exports.handler = async (event) => {
   const lambda = new AWS.Lambda();
   const params = {
     FunctionVersion: "ALL",
-    // Marker: 'STRING_VALUE',
-    // MasterRegion: "us-east-1",
     MaxItems: 50,
   };
 let data
@@ -18,7 +16,6 @@ let data
     console.log(data);
     return data
   };
-
   await getLambdas(params);
   const response = {
     statusCode: 200,
