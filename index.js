@@ -48,12 +48,12 @@ const test = await dynamoTables()
   //   }
   // }
 const test2 = await lambdaFunctions();
-console.log({test2});
+// console.log({test2});
   const lambdaOrDynamo = (view) => {
     if (view === "dynamo") {
       return "<h1>Table List</h1>" + test;
     } else {
-      return lambdaFunctions();
+      return test2;
     }
   };
 
