@@ -2,12 +2,12 @@ const AWS = require("aws-sdk");
 const { dynamoTables } = require("./dynamo.js");
 const { lambdaFunctions } = require("./lambda.js");
 exports.handler = async (event) => {
-  console.log({ event });
+  // console.log({ event });
   // const lambda = new AWS.Lambda();
-  const viewValue = {
-    view: event.queryStringParameters.view,
-  };
-
+  // const viewValue = {
+  //   view: event.queryStringParameters.view,
+  // };
+const test = await dynamoTables()
   // let params = {
   //   MaxItems: 50,
   // };
@@ -47,10 +47,11 @@ exports.handler = async (event) => {
   //     lambdaHtml += `<a href="https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/${functionName}">${functionName}<a/> - <a href= "https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252F${functionName}/log-events">logs<a/><br>`;
   //   }
   // }
-
+const test2 = await lambdaFunctions();
+console.log({test2});
   const lambdaOrDynamo = (view) => {
     if (view === "dynamo") {
-      return "<h1>Table List</h1>" + dynamoTables();
+      return "<h1>Table List</h1>" + test;
     } else {
       return lambdaFunctions();
     }
