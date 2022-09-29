@@ -3,8 +3,6 @@ exports.handler = async (event) => {
   console.log({event});
   const lambda = new AWS.Lambda();
   const dynamo = new AWS.DynamoDB();
-  const lambdaUrl = "https://m3m2dmp4jjrpo5zw4odsuu5xxy0cvmrs.lambda-url.us-east-1.on.aws/?view=lambda"
-  const dynamoUrl = "https://m3m2dmp4jjrpo5zw4odsuu5xxy0cvmrs.lambda-url.us-east-1.on.aws/?view=dynamo"
   const viewValue = {
     view: event.queryStringParameters.view,
   }
@@ -59,18 +57,18 @@ exports.handler = async (event) => {
 
   // let html = lambdaHtml + "<h1>Table List</h1>" + tableList;
 
-  const lambdaOrDynamo = () =>{
-    if(viewValue.view === 'dynamo'){
+  const lambdaOrDynamo = (view) =>{
+    if( view === 'dynamo'){
       return "<h1>Table List</h1>" + tableList
     }
-    else{
+    if(view === 'lambda'){
       return lambdaHtml
     }
   }
 
   const response = {
     statusCode: 200,
-    body: lambdaOrDynamo(),
+    body: lambdaOrDynamo(viewValue.view),
     headers: {
       "Content-Type": "text/html",
     },
