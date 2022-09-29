@@ -1,9 +1,8 @@
 const AWS = require("aws-sdk");
 const dynamo = new AWS.DynamoDB();
 
-let tableParams = {};
-
 const dynamoTables = async () => {
+  let tableParams = {};
   const tableData = await dynamo.listTables(tableParams).promise();
 
   const tableList = tableData.TableNames.map(
@@ -14,5 +13,5 @@ const dynamoTables = async () => {
 };
 
 module.exports = {
-  tableList: dynamoTables,
+  dynamoTables: dynamoTables,
 };
