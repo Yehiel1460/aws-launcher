@@ -1,18 +1,19 @@
 const AWS = require("aws-sdk");
+const {dynamoTables} = require('./dynamo')
 exports.handler = async (event) => {
-  console.log({event});
+  console.log({ event });
   const lambda = new AWS.Lambda();
-  const dynamo = new AWS.DynamoDB();
+  // const dynamo = new AWS.DynamoDB();
   const viewValue = {
     view: event.queryStringParameters.view,
-  }
+  };
 
   let params = {
     MaxItems: 50,
   };
-  let tableParams = {};
+  // let tableParams = {};
 
-  const tableData = await dynamo.listTables(tableParams).promise();
+  // const tableData = await dynamo.listTables(tableParams).promise();
 
   const allLambdas = [];
   let data = { NextMarker: true };
@@ -50,19 +51,18 @@ exports.handler = async (event) => {
     }
   }
 
-  let tableList = tableData.TableNames.map(
-    (table) =>
-      `<a href="https://us-east-1.console.aws.amazon.com/dynamodbv2/home?region=us-east-1#item-explorer?initialTagKey=&table=${table}">${table}</a><br>`
-  ).join("");
+  // let tableList = tableData.TableNames.map(
+  //   (table) =>
+  //     `<a href="https://us-east-1.console.aws.amazon.com/dynamodbv2/home?region=us-east-1#item-explorer?initialTagKey=&table=${table}">${table}</a><br>`
+  // ).join("");
 
-  const lambdaOrDynamo = (view) =>{
-    if( view === 'dynamo'){
-      return "<h1>Table List</h1>" + tableList
+  const lambdaOrDynamo = (view) => {
+    if (view === "dynamo") {
+      return "<h1>Table List</h1>" + dynamoTables();
+    } else {
+      return lambdaHtml;
     }
-    else{
-      return lambdaHtml
-    }
-  }
+  };
 
   const response = {
     statusCode: 200,
