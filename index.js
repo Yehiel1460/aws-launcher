@@ -1,14 +1,14 @@
 const AWS = require("aws-sdk");
 exports.handler = async (event) => {
+  console.log({event});
   const lambda = new AWS.Lambda();
   const dynamo = new AWS.DynamoDB();
   const lambdaUrl = "https://m3m2dmp4jjrpo5zw4odsuu5xxy0cvmrs.lambda-url.us-east-1.on.aws/?view=lambda"
   const dynamoUrl = "https://m3m2dmp4jjrpo5zw4odsuu5xxy0cvmrs.lambda-url.us-east-1.on.aws/?view=dynamo"
-  const test = JSON.stringify({
-    view: event.queryStringParameters.page,
-  })
-//   console.log(test.page = 2, test.limit = 10);
-// console.log(event.queryStringParameters);
+  const viewValue = {
+    view: event.queryStringParameters.view,
+  }
+
   let params = {
     MaxItems: 50,
   };
@@ -57,11 +57,20 @@ exports.handler = async (event) => {
       `<a href="https://us-east-1.console.aws.amazon.com/dynamodbv2/home?region=us-east-1#item-explorer?initialTagKey=&table=${table}">${table}</a><br>`
   ).join("");
 
-  let html = lambdaHtml + "<h1>Table List</h1>" + tableList;
+  // let html = lambdaHtml + "<h1>Table List</h1>" + tableList;
+
+  const lambdaOrDynamo = () =>{
+    if(viewValue.view === 'dynamo'){
+      return "<h1>Table List</h1>" + tableList
+    }
+    else{
+      return lambdaHtml
+    }
+  }
 
   const response = {
     statusCode: 200,
-    body: test,
+    body: lambdaOrDynamo(),
     headers: {
       "Content-Type": "text/html",
     },
