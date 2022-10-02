@@ -8,17 +8,17 @@ exports.handler = async (event) => {
   
   const lambdaOrDynamo = async(view) => {
     if (view === "dynamo") {
-      const dynamoTablesList = await dynamoTables();
-      return "<h1>Table List</h1>" + dynamoTablesList;
+      // const dynamoTablesList = await dynamoTables();
+      return "<h1>Table List</h1>" + dynamoTables();
     } else {
-      const lambdaFunctionsList = await lambdaFunctions();
-      return lambdaFunctionsList;
+      // const lambdaFunctionsList = await lambdaFunctions();
+      return lambdaFunctions();
     }
   };
 
   const response = {
     statusCode: 200,
-    body: lambdaOrDynamo(viewValue.view),
+    body: await lambdaOrDynamo(viewValue.view),
     headers: {
       "Content-Type": "text/html",
     },
