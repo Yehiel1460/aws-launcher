@@ -1,4 +1,3 @@
-const AWS = require("aws-sdk");
 const { dynamoTables } = require("./dynamo.js");
 const { lambdaFunctions } = require("./lambda.js");
 exports.handler = async (event) => {
@@ -6,14 +5,13 @@ exports.handler = async (event) => {
   const viewValue = {
     view: event.queryStringParameters.view,
   };
-  const dynamoTablesList = await dynamoTables();
-
-  const lambdaFunctionsList = await lambdaFunctions();
-
-  const lambdaOrDynamo = (view) => {
+  
+  const lambdaOrDynamo = async(view) => {
     if (view === "dynamo") {
+      const dynamoTablesList = await dynamoTables();
       return "<h1>Table List</h1>" + dynamoTablesList;
     } else {
+      const lambdaFunctionsList = await lambdaFunctions();
       return lambdaFunctionsList;
     }
   };
