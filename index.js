@@ -5,20 +5,17 @@ exports.handler = async (event) => {
   const viewValue = {
     view: event.queryStringParameters.view,
   };
-  
-  const lambdaOrDynamo = async(view) => {
-    if (view === "dynamo") {
-      // const dynamoTablesList = await dynamoTables();
-      return "<h1>Table List</h1>" + dynamoTables();
-    } else {
-      // const lambdaFunctionsList = await lambdaFunctions();
-      return lambdaFunctions();
-    }
-  };
+
+  let viewResault;
+  if (viewValue.view === "dynamo") {
+    viewResault = await dynamoTables();
+  } else {
+    viewResault = await lambdaFunctions();
+  }
 
   const response = {
     statusCode: 200,
-    body: await lambdaOrDynamo(viewValue.view),
+    body: viewResault,
     headers: {
       "Content-Type": "text/html",
     },
