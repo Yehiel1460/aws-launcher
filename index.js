@@ -2,17 +2,21 @@ const { dynamoTables } = require("./dynamo.js");
 const { lambdaFunctions } = require("./lambda.js");
 exports.handler = async (event) => {
   console.log({ event });
-  const viewValue = {
-    view: event.queryStringParameters?.view,
-  };
+  try {
+    const viewValue = {
+      view: event.queryStringParameters?.view,
+    };
 
-  let viewResault;
-  if (viewValue.view === "dynamo") {
-    viewResault = await dynamoTables();
-  } else if (viewValue.view === "lambda") {
-    viewResault = await lambdaFunctions();
-  } else if(!event.queryStringParameters){
-    viewResault = `<a href= ?view=dynamo>Dynamo List</a> - <a href= ?view=lambda>Lambda List</a>`;
+    let viewResault;
+    if (viewValue.view === "dynamo") {
+      viewResault = await dynamoTables();
+    } else if (viewValue.view === "lambda") {
+      viewResault = await lambdaFunctions();
+    } else if (!event.queryStringParameters) {
+      viewResault = `<a href= ?view=dynamo>Dynamo List</a> - <a href= ?view=lambda>Lambda List</a>`;
+    }
+  } catch (error) {
+    console.log(error);
   }
 
   const response = {
