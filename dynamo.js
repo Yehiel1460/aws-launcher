@@ -2,6 +2,7 @@ const AWS = require("aws-sdk");
 const dynamo = new AWS.DynamoDB();
 
 const dynamoTables = async () => {
+  console.log("running dynamoTables function");
   let tableParams = {};
   const tableData = await dynamo.listTables(tableParams).promise();
 
