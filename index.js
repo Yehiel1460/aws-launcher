@@ -1,3 +1,4 @@
+const AWS = require("aws-sdk");
 const { dynamoTables } = require("./dynamo.js");
 const { lambdaFunctions } = require("./lambda.js");
 try {
@@ -6,6 +7,14 @@ try {
     const viewValue = {
       view: event.queryStringParameters?.view,
     };
+    AWS.config.getCredentials(function(err) {
+      if (err) console.log(err.stack);
+      // credentials not loaded
+      else {
+        console.log("Access key:", AWS.config.credentials.accessKeyId);
+      }
+    });
+    
 
     let viewResault;
     if (viewValue.view === "dynamo") {
