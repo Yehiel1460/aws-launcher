@@ -3,17 +3,19 @@ const { lambdaFunctions } = require("./lambda.js");
 exports.handler = async (event) => {
   console.log({ event });
   const viewValue = {
-    view: event.queryStringParameters.view,
+    view: event.queryStringParameters?.view,
   };
-  const listHref = 'https://yv8insn58f.execute-api.us-east-1.amazonaws.com/default/aws-launcher-test?view='
+  const listHref ="https://yv8insn58f.execute-api.us-east-1.amazonaws.com/default/aws-launcher-test?view=";
 
   let viewResault;
   if (viewValue.view === "dynamo") {
     viewResault = await dynamoTables();
   } else if (viewValue.view === "lambda") {
     viewResault = await lambdaFunctions();
-  } if(viewValue.view === null) {
-    viewResault = `<a href= ${listHref + 'dynamo'}>Dynamo List</a> - <a href= ${listHref + 'lambda'}>Lambda List</a>`;
+  } else if (!event.queryStringParameters) {
+    viewResault = `<a href= ${listHref + "dynamo"}>Dynamo List</a> - <a href= ${
+      listHref + "lambda"
+    }>Lambda List</a>`;
   }
 
   const response = {
