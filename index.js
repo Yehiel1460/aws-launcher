@@ -4,8 +4,8 @@ exports.handler = async (event) => {
   console.log({ event });
   const viewValue = {
     view: event.queryStringParameters?.view,
-    domainName: event.requestContext?.domainName,
-    path: event.requestContext?.path
+    domainName: event.requestContext.domainName,
+    path: event.requestContext.path
   };
 
   let viewResault;
