@@ -9,8 +9,10 @@ exports.handler = async (event) => {
   let viewResault;
   if (viewValue.view === "dynamo") {
     viewResault = await dynamoTables();
-  } else {
+  } else if (viewValue.view === "lambda") {
     viewResault = await lambdaFunctions();
+  } else {
+    viewResault = `<a href= "https://yv8insn58f.execute-api.us-east-1.amazonaws.com/default/aws-launcher-test?view=dynamo">Dynamo List</a> - <a href= "https://yv8insn58f.execute-api.us-east-1.amazonaws.com/default/aws-launcher-test?view=lambda">Lambda List</a>`
   }
 
   const response = {
