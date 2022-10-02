@@ -1,8 +1,8 @@
 const { dynamoTables } = require("./dynamo.js");
 const { lambdaFunctions } = require("./lambda.js");
-exports.handler = async (event) => {
-  console.log({ event });
-  try {
+try {
+  exports.handler = async (event) => {
+    console.log({ event });
     const viewValue = {
       view: event.queryStringParameters?.view,
     };
@@ -15,16 +15,16 @@ exports.handler = async (event) => {
     } else if (!event.queryStringParameters) {
       viewResault = `<a href= ?view=dynamo>Dynamo List</a> - <a href= ?view=lambda>Lambda List</a>`;
     }
-  } catch (error) {
-    console.log(error);
-  }
 
-  const response = {
-    statusCode: 200,
-    body: viewResault,
-    headers: {
-      "Content-Type": "text/html",
-    },
+    const response = {
+      statusCode: 200,
+      body: viewResault,
+      headers: {
+        "Content-Type": "text/html",
+      },
+    };
+    return response;
   };
-  return response;
-};
+} catch (error) {
+  console.log(error);
+}
