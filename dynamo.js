@@ -12,9 +12,10 @@ try {
     ).join("");
     return "<h1>Table List</h1>" + tableList;
   };
+
+  module.exports = {
+    dynamoTables: dynamoTables,
+  };
 } catch (error) {
   console.log(error);
 }
-module.exports = {
-  dynamoTables: dynamoTables,
-};

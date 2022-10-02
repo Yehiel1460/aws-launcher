@@ -44,9 +44,10 @@ try {
     }
     return lambdaHtml;
   };
+
+  module.exports = {
+    lambdaFunctions: lambdaFunctions,
+  };
 } catch (error) {
   console.log(error);
 }
-module.exports = {
-  lambdaFunctions: lambdaFunctions,
-};
