@@ -7,12 +7,15 @@ try {
     const viewValue = {
       view: event.queryStringParameters?.view,
     };
-    AWS.config.getCredentials(function(err) {
-      if (err) console.log(err.stack);
-      // credentials not loaded
-      else {
-        console.log("Access key:", AWS.config.credentials.accessKeyId);
-      }
+    AWS.config.update( {
+      accessKeyId: event.queryStringParameters.accessKeyId,
+      secretAccessKey: event.queryStringParameters.secretAccessKey
+      // if (err) console.log(err.stack);
+      // // credentials not loaded
+      // else {
+      //   console.log("Access key:", AWS.config.credentials.accessKeyId);
+      //   console.log("Secret key:", AWS.config.credentials.secretAccessKey);
+      // }
     });
     
 
