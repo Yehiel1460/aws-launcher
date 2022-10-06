@@ -1,5 +1,6 @@
 const AWS = require("aws-sdk");
 exports.handler = async (event) => {
+  console.log({event});
   AWS.config.update({
     MasterRegion: "us-east-1",
     accessKeyId: event.queryStringParameters.accessKeyId,
