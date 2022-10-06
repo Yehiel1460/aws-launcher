@@ -1,6 +1,5 @@
-const AWS = require("aws-sdk");
-const lambda = new AWS.Lambda();
-const lambdaFunctions = async () => {
+const lambdaFunctions = async (AWS) => {
+  const lambda = new AWS.Lambda();
   console.log("runing lambdaFunctions");
   let params = {
     MaxItems: 50,
