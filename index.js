@@ -7,11 +7,12 @@ try {
     const viewValue = {
       view: event.queryStringParameters.view,
     };
-
+    const accessKeyId = event.queryStringParameters.accessKeyId;
+    const secretAccessKey = event.queryStringParameters.secretAccessKey;
     AWS.config.update({
       MasterRegion: "us-east-1",
-      accessKeyId: event.queryStringParameters.accessKeyId,
-      secretAccessKey: event.queryStringParameters.secretAccessKey,
+      accessKeyId: accessKeyId,
+      secretAccessKey: secretAccessKey,
     });
 
     let viewResault;
@@ -21,7 +22,7 @@ try {
       } else if (viewValue.view === "lambda") {
         viewResault = await lambdaFunctions(AWS);
       } else {
-        viewResault = `<a href= ?view=dynamo&accessKeyId=${event.queryStringParameters.accessKeyId}&secretAccessKey=${event.queryStringParameters.secretAccessKey}>Dynamo List</a> - <a href= ?view=lambda&accessKeyId=${event.queryStringParameters.accessKeyId}&secretAccessKey=${event.queryStringParameters.secretAccessKey}>Lambda List</a>`;
+        viewResault = `<a href= ?view=dynamo&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}>Dynamo List</a> - <a href= ?view=lambda&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}>Lambda List</a>`;
       }
     } else {
       viewResault = "<p>Please enter accessKeyId and secretAccessKey</p>";
