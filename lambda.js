@@ -1,4 +1,4 @@
-const lambdaFunctions = async (AWS) => {
+const lambda = async (AWS) => {
   const lambda = new AWS.Lambda();
   console.log("runing lambdaFunctions");
   let params = {
@@ -44,5 +44,5 @@ const lambdaFunctions = async (AWS) => {
 };
 
 module.exports = {
-  lambdaFunctions: lambdaFunctions,
+  lambda: lambda,
 };

@@ -1,6 +1,7 @@
-const AWS = require("aws-sdk");
-const { dynamoTables } = require("./dynamo.js");
-const { lambdaFunctions } = require("./lambda.js");
+import AWS, { config } from "aws-sdk";
+import { dynamo } from "./dynamo.js";
+import { lambda } from "./lambda.js";
+import { pipeline } from "./pipeline.js";
 try {
   exports.handler = async (event) => {
     console.log({ event });
@@ -9,28 +10,15 @@ try {
     };
     const accessKeyId = event.queryStringParameters.accessKeyId;
     const secretAccessKey = event.queryStringParameters.secretAccessKey;
-    AWS.config.update({
+    config.update({
       MasterRegion: "us-east-1",
       accessKeyId: accessKeyId,
       secretAccessKey: secretAccessKey,
     });
 
-    let viewResault;
-    if (event.queryStringParameters.accessKeyId) {
-      if (viewValue.view === "dynamo") {
-        viewResault = await dynamoTables(AWS);
-      } else if (viewValue.view === "lambda") {
-        viewResault = await lambdaFunctions(AWS);
-      } else {
-        viewResault = `<a href= ?view=dynamo&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}>Dynamo List</a> - <a href= ?view=lambda&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}>Lambda List</a>`;
-      }
-    } else {
-      viewResault = "<p>Please enter accessKeyId and secretAccessKey</p>";
-    }
-
     const response = {
       statusCode: 200,
-      body: viewResault,
+      body: await getViewResault(accessKeyId, viewValue.view),
       headers: {
         "Content-Type": "text/html",
       },
@@ -47,3 +35,15 @@ try {
   };
   return response;
 }
+
+const getViewResault = async (accessKeyId, view) => {
+  if (!accessKeyId) {
+    return "<p>Please enter accessKeyId and secretAccessKey</p>";
+  }
+  {
+    dynamo, lambda, pipeline;
+  }
+  [view](AWS);
+
+  return `<a href= ?view=dynamo&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}>Dynamo List</a> - <a href= ?view=lambda&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}>Lambda List</a>`;
+};

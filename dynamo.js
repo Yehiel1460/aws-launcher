@@ -1,5 +1,5 @@
 
-const dynamoTables = async (AWS) => {
+const dynamo = async (AWS) => {
   const dynamo = new AWS.DynamoDB();
   console.log("running dynamoTables function");
   let tableParams = {};
@@ -13,5 +13,5 @@ const dynamoTables = async (AWS) => {
 };
 
 module.exports = {
-  dynamoTables: dynamoTables,
+  dynamo: dynamo,
 };
