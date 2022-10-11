@@ -1,18 +1,12 @@
 const pipeline = async (AWS) =>{
     const pipeLine = new AWS.DataPipeline
     const pipeLinesParams = {}
-    const allPipeLines = [];
-    let data = { nextToken: true };
-  while (data.nextToken) {
-    data = await pipeLine.listPipelines(pipeLinesParams).promise();
-    allPipeLines.push(...data);
-    params.Token = data.nextToken;
-  }
-//   allPipeLines.map(pipe =>{
+    let pipelineData = await pipeLine.listPipelines(pipeLinesParams).promise();
 
-//   })
-return console.log(data);
-
+const pipelineList = pipelineData.pipelineIdList.map((pipeline)=>{
+    `<a href= "https://us-east-1.console.aws.amazon.com/codesuite/codepipeline/pipelines/${pipeline}/view?region=us-east-1">${pipeline}</a>`
+})
+return "<h1>Pipeline List</h1>" + pipelineList
 }
 
 module.exports = {
