@@ -6,16 +6,17 @@ try {
   exports.handler = async (event) => {
     console.log({ event });
     const viewValue = {
-      view: event.queryStringParameters.view,
+      view: 'pipeline',
     };
-    const accessKeyId = event.queryStringParameters.accessKeyId;
-    const secretAccessKey = event.queryStringParameters.secretAccessKey;
+    const accessKeyId = 'AKIAVNP7MCLIPBQGQPIA';
+    const secretAccessKey = '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';
+    console.log('before');
     AWS.config.update({
       MasterRegion: "us-east-1",
       accessKeyId: accessKeyId,
       secretAccessKey: secretAccessKey,
     });
-
+    
     const response = {
       statusCode: 200,
       body: await getViewResult(accessKeyId, secretAccessKey, viewValue.view),
@@ -35,13 +36,20 @@ try {
   };
   return response;
 }
-
+const getDefaultHtml = (listType, accessKeyId, secretAccessKey) => {
+  let defaultHtml;
+  for (const [type] of Object.entries(listType)) {
+    defaultHtml += `<a href= ?view=${type}&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}>${type} List</a> - `;
+  }
+  return defaultHtml;
+};
 const getViewResult = async (accessKeyId, secretAccessKey, view) => {
   if (!accessKeyId) {
     return "<p>Please enter accessKeyId and secretAccessKey</p>";
   }
+  const listType = { dynamo, lambda, pipeline };
   return (
-    (await { dynamo, lambda, pipeline }[view]?.(AWS)) ||
-    `<a href= ?view=pipeline&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}>Pipeline List</a> - <a href= ?view=dynamo&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}>Dynamo List</a> - <a href= ?view=lambda&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}>Lambda List</a>`
+    (await listType[view]?.(AWS)) ||
+    getDefaultHtml(listType, accessKeyId, secretAccessKey)
   );
 };
