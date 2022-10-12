@@ -23,7 +23,7 @@ exports.handler = async (event) => {
         "Content-Type": "text/html",
       },
     };
-  return response;
+    return response;
   } catch (error) {
     const response = {
       statusCode: 200,
@@ -37,10 +37,9 @@ exports.handler = async (event) => {
 };
 
 const getDefaultHtml = (listType, accessKeyId, secretAccessKey) => {
-  let defaultHtml;
+  let defaultHtml = "";
   for (const [type] of Object.entries(listType)) {
-    console.log(type)
-    defaultHtml += `<a href= ?view=${type}&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}>${type} List</a> - `;
+    defaultHtml += `<a href="?view=${type}&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}">${type} List</a><br>`;
   }
   return defaultHtml;
 };
