@@ -1,4 +1,3 @@
-
 const dynamo = async (AWS) => {
   const dynamo = new AWS.DynamoDB();
   console.log("running dynamoTables function");

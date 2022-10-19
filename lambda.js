@@ -40,6 +40,7 @@ const lambda = async (AWS) => {
       lambdaHtml += `<a href="https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/${functionName}">${functionName}<a/> - <a href= "https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252F${functionName}/log-events">logs<a/><br>`;
     }
   }
+  
   return lambdaHtml;
 };
 

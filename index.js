@@ -2,6 +2,7 @@ const AWS = require("aws-sdk");
 const { dynamo } = require("./dynamo.js");
 const { lambda } = require("./lambda.js");
 const { pipeline } = require("./pipeline.js");
+const { client } = require("./client.js");
 
 exports.handler = async (event) => {
   console.log({ event });
@@ -11,7 +12,7 @@ exports.handler = async (event) => {
   const accessKeyId = event.queryStringParameters.accessKeyId;
   const secretAccessKey = event.queryStringParameters.secretAccessKey;
   AWS.config.update({
-    MasterRegion: "us-east-1", 
+    MasterRegion: "us-east-1",
     accessKeyId: accessKeyId,
     secretAccessKey: secretAccessKey,
   });
@@ -43,13 +44,15 @@ const getDefaultHtml = (listType, accessKeyId, secretAccessKey) => {
   }
   return defaultHtml;
 };
+
 const getViewResult = async (accessKeyId, secretAccessKey, view) => {
   if (!accessKeyId) {
     return "<p>Please enter accessKeyId and secretAccessKey</p>";
   }
   const listType = { dynamo, lambda, pipeline };
+  const currentType = await listType[view]?.(AWS);
   return (
-    (await listType[view]?.(AWS)) ||
+    client(currentType) ||
     getDefaultHtml(listType, accessKeyId, secretAccessKey)
   );
 };
