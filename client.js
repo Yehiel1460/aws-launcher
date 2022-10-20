@@ -1,26 +1,36 @@
 const client = async (currentType) => {
-//   let result = "";
-//   result = `<script>if(!localStorage.getItem("currentRes")){localStorage.setItem("currentRes", JSON.stringify("${currentType}"))}else{localStorage.getItem("currentRes")}</script>`;
-let html = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
-</head>
-<body>
-<h1>Hello</h1>
-<script src="./script.js" type="module"></script>
-</body>
-</html>
-`
-return html;
-};
-
-module.exports = {
-  client: client,
-};
+  const type = JSON.stringify(currentType);
+  let html = `
+  <html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>aws-launcher</title>
+  </head>
+  <body>
+  <div class="mainDiv"></div>
+  <script type="text/javascript">if (!localStorage.getItem("currentRes")) {
+  console.log('if');
+  console.log(${type});
+  localStorage.setItem("currentRes", ${type});
+  } else {
+  const div = document.querySelector(".mainDiv")
+  console.log("else");
+  let getFromLocalStorage = localStorage.getItem("currentRes");
+  div.innerHTML = getFromLocalStorage;
+  console.log(getFromLocalStorage);
+  }
+  </script>
+  </body>
+  </html>
+  `;
+  console.log({html});
+  return html;
+  };
+  
+  module.exports = {
+    client: client,
+  };
 
 
