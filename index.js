@@ -52,7 +52,7 @@ const getViewResult = async (accessKeyId, secretAccessKey, view) => {
   const listType = { dynamo, lambda, pipeline };
   const currentType = await listType[view]?.(AWS);
   return (
-    client(currentType) ||
+    client(currentType,view) ||
     getDefaultHtml(listType, accessKeyId, secretAccessKey)
   );
 };
