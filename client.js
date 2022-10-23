@@ -31,9 +31,6 @@ const client = async (currentType) => {
   module.exports = {
     client: client,
   };
-  
-  module.exports = {
-    client: client,
-  };
+
 
 
