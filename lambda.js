@@ -37,10 +37,10 @@ const lambda = async (AWS) => {
   for (const [header, functions] of Object.entries(appList)) {
     lambdaHtml += `<h1>${header}</h1><br>`;
     for (const functionName of functions) {
-      lambdaHtml += `<a href="https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/${functionName}">${functionName}<a/> - <a href= "https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252F${functionName}/log-events">logs<a/><br>`;
+      lambdaHtml += `<div><h4 style="display: inline;">${functionName}: </h4><a href="https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/${functionName}">lambda<a/> - <a href= "https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252F${functionName}/log-events">logs<a/></div><br>`;
     }
   }
-  
+
   return lambdaHtml;
 };
 
