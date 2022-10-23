@@ -11,15 +11,14 @@ const client = async (currentType) => {
   <body>
   <div class="mainDiv"></div>
   <script type="text/javascript">if (localStorage.getItem("currentRes") != ${type}) {
-  console.log('if');
-  console.log(${type});
   localStorage.setItem("currentRes", ${type});
-  } else {
   const div = document.querySelector(".mainDiv")
-  console.log("else");
   let getFromLocalStorage = localStorage.getItem("currentRes");
   div.innerHTML = getFromLocalStorage;
-  console.log(getFromLocalStorage);
+  } else {
+  const div = document.querySelector(".mainDiv")
+  let getFromLocalStorage = localStorage.getItem("currentRes");
+  div.innerHTML = getFromLocalStorage;
   }
   </script>
   </body>
