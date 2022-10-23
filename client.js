@@ -10,7 +10,7 @@ const client = async (currentType) => {
   </head>
   <body>
   <div class="mainDiv"></div>
-  <script type="text/javascript">if (!localStorage.getItem("currentRes")) {
+  <script type="text/javascript">if (localStorage.getItem("currentRes") != ${type}) {
   console.log('if');
   console.log(${type});
   localStorage.setItem("currentRes", ${type});
@@ -27,6 +27,10 @@ const client = async (currentType) => {
   `;
   console.log({html});
   return html;
+  };
+  
+  module.exports = {
+    client: client,
   };
   
   module.exports = {
