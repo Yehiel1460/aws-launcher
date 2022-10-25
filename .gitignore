@@ -6,4 +6,3 @@ context.json
 deploy.env
 event.json
 event_sources.json
-aws-launcher-react/

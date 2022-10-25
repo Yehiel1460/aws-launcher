@@ -1,8 +1,5 @@
 const AWS = require("aws-sdk");
-const { dynamo } = require("./dynamo.js");
-const { lambda } = require("./lambda.js");
-const { pipeline } = require("./pipeline.js");
-const { client } = require("./client.js");
+const { getViewResult } = require("./client.js");
 
 exports.handler = async (event) => {
   console.log({ event });
@@ -35,24 +32,4 @@ exports.handler = async (event) => {
     };
     return response;
   }
-};
-
-const getDefaultHtml = (listType, accessKeyId, secretAccessKey) => {
-  let defaultHtml = "";
-  for (const [type] of Object.entries(listType)) {
-    defaultHtml += `<a href="?view=${type}&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}">${type} List</a><br>`;
-  }
-  return defaultHtml;
-};
-
-const getViewResult = async (accessKeyId, secretAccessKey, view) => {
-  if (!accessKeyId) {
-    return "<p>Please enter accessKeyId and secretAccessKey</p>";
-  }
-  const listType = { dynamo, lambda, pipeline };
-  const currentType = await listType[view]?.(AWS);
-  return (
-    client(currentType,view) ||
-    getDefaultHtml(listType, accessKeyId, secretAccessKey)
-  );
 };
