@@ -44,7 +44,10 @@ const currentList = async (typeName, AWS, listType) => {
         dynamo: `/dynamodbv2/home?region=us-east-1#item-explorer?initialTagKey=&table=${functionName}`,
         pipeline: `/codesuite/codepipeline/pipelines/${functionName}/view?region=us-east-1`,
       };
-      htmlList += `<div><h4 style="display: inline;">${functionName}: </h4><a href="https://us-east-1.console.aws.amazon.com${type[typeName]}">${typeName}<a/> - <a href= "https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252F${functionName}/log-events">logs<a/></div><br>`;
+      htmlList += `<div><h4 style="display: inline;">${functionName}: </h4><a href="https://us-east-1.console.aws.amazon.com${type[typeName]}">${typeName}<a/>`;
+      if(typeName === 'lambda'){
+        htmlList +=  ` - <a href= "https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252F${functionName}/log-events">logs<a/></div><br>`
+      }
     }
   }
   console.log({ htmlList });
@@ -64,7 +67,6 @@ const getViewResult = async (accessKeyId, secretAccessKey, view) => {
     return "<p>Please enter accessKeyId and secretAccessKey</p>";
   }
   const listType = { dynamo, lambda, pipeline };
-  // const currentType = await listType[view]?.(AWS);
   return (
     client(view, listType) ||
     getDefaultHtml(listType, accessKeyId, secretAccessKey)
