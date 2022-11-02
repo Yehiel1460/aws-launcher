@@ -6,9 +6,12 @@ const pipeline = async (AWS) => {
   let pipelineList = {
     pipelinesList: [],
   };
-  pipelineData.pipelineIdList.map((item) => {
-    return pipelineList.pipelinesList.push([item]);
-  });
+
+  for (const [header, functions] of Object.entries(pipelineData)){
+    for (const functionName of functions) {
+      pipelineList.pipelinesList.push([functionName.name])
+    }
+  }
   const res = {
     list: pipelineList,
     links: function (id) {
