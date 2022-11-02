@@ -34,22 +34,25 @@ const client = async (typeName, listType) => {
 
 const currentList = async (typeName, AWS, listType) => {
   const currentType = await listType[typeName]?.(AWS);
-  console.log({ currentType });
+  console.log( currentType.list );
   let htmlList = "";
-  for (const [header, functions] of Object.entries(currentType)) {
+  for (const [header, functions] of Object.entries(currentType.list)) {
     htmlList += `<h1>${header}</h1><br>`;
     for (const functionName of functions) {
-      const type = {
-        lambda: `/lambda/home?region=us-east-1#/functions/${functionName}`,
-        dynamo: `/dynamodbv2/home?region=us-east-1#item-explorer?initialTagKey=&table=${functionName}`,
-        pipeline: `/codesuite/codepipeline/pipelines/${functionName}/view?region=us-east-1`,
-      };
-      htmlList += `<div><h4 style="display: inline;">${functionName}: </h4><a href="https://us-east-1.console.aws.amazon.com${type[typeName]}">${typeName}<a/>`;
-      if(typeName === 'lambda'){
-        htmlList +=  ` - <a href= "https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252F${functionName}/log-events">logs<a/></div><br>`
-      }
+      const afterFunctionName = currentType.extra? functionName + currentType.extra : functionName;
+      // const type = {
+      //   lambda: `/lambda/home?region=us-east-1#/functions/${functionName}`,
+      //   lambdaLogs: `/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252F${functionName}/log-events`,
+      //   dynamo: `/dynamodbv2/home?region=us-east-1#item-explorer?initialTagKey=&table=${functionName}`,
+      //   pipeline: `/codesuite/codepipeline/pipelines/${functionName}/view?region=us-east-1`,
+      // };
+      const test = await currentType.links(functionName)
+      test.map((currentItem)=>{
+        return htmlList += `<a href="https://us-east-1.console.aws.amazon.com${currentItem.url}">${currentItem.label}</a>`
+      })
+      // htmlList += `<h4 style="display: inline;">${functionName}: </h4><a href="https://us-east-1.console.aws.amazon.com${currentType.url + functionName}">${typeName}<a/> - <a href= "https://us-east-1.console.aws.amazon.com${currentType.logs + afterFunctionName}">logs<a/><br>`;
     }
-  }
+  } 
   console.log({ htmlList });
   return htmlList;
 };

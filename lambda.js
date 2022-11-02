@@ -32,8 +32,16 @@ const lambda = async (AWS) => {
       appList[appName].push(lambda.FunctionName);
     }
   }
-
-  return appList;
+  const res = {
+    list: appList,
+    links: function (id) {
+      return [
+        {label:id ,url:`/lambda/home?region=us-east-1#/functions/${id}`},
+        {label:'logs',url:`/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252F${id}/log-events`},
+      ];
+    },
+  };
+  return res;
 };
 
 module.exports = {

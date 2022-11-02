@@ -6,10 +6,19 @@ const pipeline = async (AWS) => {
   let pipelineList = {
     pipelinesList: [],
   };
-  const list = pipelineData.pipelineIdList.map((item) => {
+  pipelineData.pipelineIdList.map((item) => {
     return pipelineList.pipelinesList.push([item]);
   });
-  return pipelineList;
+  const res = {
+    list: pipelineList,
+    links: function (id) {
+      return [
+        {label:id ,url:`/codesuite/codepipeline/pipelines/${id}/view?region=us-east-1`},
+        {label:'logs',url:`/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252F${id}/log-events`},
+      ];
+    },
+  };
+  return res;
 };
 
 module.exports = {

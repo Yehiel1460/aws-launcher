@@ -6,10 +6,19 @@ const dynamo = async (AWS) => {
   let tableList = {
     TablesList: [],
   };
-  const list = tableData.TableNames.map((item) => {
+  tableData.TableNames.map((item) => {
     return tableList.TablesList.push([item]);
   });
-  return tableList;
+  const res = {
+    list: tableList,
+    links: function (id) {
+      return [
+        {label:id,url:`/dynamodbv2/home?region=us-east-1#item-explorer?initialTagKey=&table=${id}`},
+        {label:'logs',url:`/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252F${id}/log-events`},
+      ];
+    },
+  };
+  return res;
 };
 
 module.exports = {
