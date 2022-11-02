@@ -14,7 +14,7 @@ const dynamo = async (AWS) => {
     links: function (id) {
       return [
         {label:id,url:`/dynamodbv2/home?region=us-east-1#item-explorer?initialTagKey=&table=${id}`},
-        {label:'logs',url:`/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252F${id}/log-events`},
+        {label:'index',url:`https://us-east-1.console.aws.amazon.com/dynamodbv2/home?region=us-east-1#table?initialTagKey=&name=${id}&tab=indexes`},
       ];
     },
   };
