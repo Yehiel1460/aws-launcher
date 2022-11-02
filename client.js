@@ -39,18 +39,10 @@ const currentList = async (typeName, AWS, listType) => {
   for (const [header, functions] of Object.entries(currentType.list)) {
     htmlList += `<h1>${header}</h1><br>`;
     for (const functionName of functions) {
-      const afterFunctionName = currentType.extra? functionName + currentType.extra : functionName;
-      // const type = {
-      //   lambda: `/lambda/home?region=us-east-1#/functions/${functionName}`,
-      //   lambdaLogs: `/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252F${functionName}/log-events`,
-      //   dynamo: `/dynamodbv2/home?region=us-east-1#item-explorer?initialTagKey=&table=${functionName}`,
-      //   pipeline: `/codesuite/codepipeline/pipelines/${functionName}/view?region=us-east-1`,
-      // };
       const test = await currentType.links(functionName)
       test.map((currentItem)=>{
         return htmlList += `<a href="https://us-east-1.console.aws.amazon.com${currentItem.url}">${currentItem.label}</a>`
       })
-      // htmlList += `<h4 style="display: inline;">${functionName}: </h4><a href="https://us-east-1.console.aws.amazon.com${currentType.url + functionName}">${typeName}<a/> - <a href= "https://us-east-1.console.aws.amazon.com${currentType.logs + afterFunctionName}">logs<a/><br>`;
     }
   } 
   console.log({ htmlList });
