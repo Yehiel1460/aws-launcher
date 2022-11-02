@@ -39,9 +39,10 @@ const currentList = async (typeName, AWS, listType) => {
   for (const [header, functions] of Object.entries(currentType.list)) {
     htmlList += `<h1>${header}</h1><br>`;
     for (const functionName of functions) {
-      const test = await currentType.links(functionName)
-      test.map((currentItem)=>{
-        return htmlList += `<a href="https://us-east-1.console.aws.amazon.com${currentItem.url}">${currentItem.label}</a>`
+      const urlList = await currentType.links(functionName)
+      urlList.map((currentItem)=>{
+        const newLine = currentItem.label != functionName? "<br>" : ' - ';
+        return htmlList += `<a href="https://us-east-1.console.aws.amazon.com${currentItem.url}">${currentItem.label}</a>${newLine}`
       })
     }
   } 
