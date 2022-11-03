@@ -6,3 +6,4 @@ context.json
 deploy.env
 event.json
 event_sources.json
+allLambdas.json
