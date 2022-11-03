@@ -42,8 +42,7 @@ const currentList = async (typeName, AWS, listType) => {
       htmlList += `<br>`;
       const urlList = await currentType.links(functionName)
       urlList.map((currentItem)=>{
-        const test = " - "
-        return htmlList += `<a style="letter-spacing: 1px;" href="https://us-east-1.console.aws.amazon.com${currentItem.url}">${currentItem.label}</a>${test}`
+        return htmlList += `<a style="letter-spacing: 1px;" href="https://us-east-1.console.aws.amazon.com${currentItem.url}">${currentItem.label}</a> - `
       })
     }
   } 
