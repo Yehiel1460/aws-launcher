@@ -3,8 +3,8 @@ const { lambda } = require("./lambda.js");
 const { dynamo } = require("./dynamo.js");
 const { pipeline } = require("./pipeline.js");
 
-const client = async (typeName, listType) => {
-  const currentType = await currentList(typeName, AWS, listType);
+const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
+  const currentType = await currentList(typeName, AWS, listType,accessKeyId,secretAccessKey);
   let html = `
   <html lang="en">
   <head>
@@ -32,18 +32,19 @@ const client = async (typeName, listType) => {
   return html;
 };
 
-const currentList = async (typeName, AWS, listType) => {
+const currentList = async (typeName, AWS, listType,accessKeyId,secretAccessKey) => {
   const currentType = await listType[typeName]?.(AWS);
   console.log( currentType.list );
   let htmlList = "";
+  htmlList += `<a href="?accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}">Home</a>`;
   for (const [header, functions] of Object.entries(currentType.list)) {
     htmlList += `<h1>${header}</h1><br>`;
     for (const functionName of functions) {
       htmlList += `<br>`;
-      const urlList = await currentType.links(functionName)
+      const urlList = await currentType.links(functionName);
       urlList.map((currentItem)=>{
-        return htmlList += `<a style="letter-spacing: 1px;" href="https://us-east-1.console.aws.amazon.com${currentItem.url}">${currentItem.label}</a> - `
-      })
+        return htmlList += `<a style="letter-spacing: 1px;" href="https://us-east-1.console.aws.amazon.com${currentItem.url}">${currentItem.label}</a> - `;
+      });
     }
   } 
   console.log({ htmlList });
@@ -64,7 +65,7 @@ const getViewResult = async (accessKeyId, secretAccessKey, view) => {
   }
   const listType = { dynamo, lambda, pipeline };
   return (
-    client(view, listType) ||
+    client(view, listType,accessKeyId,secretAccessKey) ||
     getDefaultHtml(listType, accessKeyId, secretAccessKey)
   );
 };
