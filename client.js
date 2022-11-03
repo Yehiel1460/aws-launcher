@@ -44,7 +44,7 @@ const currentList = async (typeName, AWS, listType,accessKeyId,secretAccessKey) 
       const urlList = await currentType.links(functionName);
       urlList.map((currentItem)=>{
         return htmlList += `<a style="letter-spacing: 1px;" href="https://us-east-1.console.aws.amazon.com${currentItem.url}">${currentItem.label}</a> - `;
-      });
+      }); 
     }
   } 
   console.log({ htmlList });
