@@ -22,6 +22,7 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
       margin-top: 20px;
   }
 .button{
+  color:black;
   text-decoration: none;
   font-size: 16px;
   font-weight: 200;
