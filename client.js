@@ -16,6 +16,20 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
   <body>
   <table class="mainDiv"></table>
   <style>
+  a:link {
+  text-decoration: none;
+}
+a:visited {
+  text-decoration: none;
+  color:red;
+}
+a:hover {
+  text-decoration: underline;
+  background:#66ff66;
+}
+a:active {
+  text-decoration: underline;
+}
   table{
     display:flex;
     flex-direction: column;
