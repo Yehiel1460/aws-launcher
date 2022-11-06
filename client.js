@@ -17,7 +17,11 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
   <div>${getDefaultHtml(listType, accessKeyId, secretAccessKey)}</div>
   <table class="mainDiv"></table>
   <style>
-button{
+  .app{
+      margin-top: 20px;
+  }
+.button{
+  text-decoration: none;
   font-size: 16px;
   font-weight: 200;
   letter-spacing: 1px;
@@ -31,8 +35,7 @@ button{
   -webkit-user-select: none;
   touch-action: manipulation;
 }
-
-button:after {
+.button:after {
   content: "";
   background-color: #ffe54c;
   width: 100%;
@@ -43,29 +46,22 @@ button:after {
   left: 7px;
   transition: 0.2s;
 }
-
-button:hover:after {
+.button:hover:after {
   top: 0px;
   left: 0px;
 }
-
-@media (min-width: 768px) {
-  .button-52 {
-    padding: 13px 50px 13px;
-  }
-}
-  a:link {
+  .link:link {
   text-decoration: none;
 }
-a:visited {
+.link:visited {
   text-decoration: none;
   color:red;
 }
-a:hover {
+.link:hover {
   text-decoration: underline;
   background:#ffe54c;
 }
-a:active {
+.link:active {
   text-decoration: underline;
 }
   table{
@@ -96,17 +92,17 @@ a:active {
   return html;
 };
 
-const currentList = async (typeName, AWS, listType,accessKeyId,secretAccessKey) => {
+const currentList = async (typeName, AWS, listType) => {
   const currentType = await listType[typeName]?.(AWS);
   console.log( currentType.list );
   let htmlList = "";
   for (const [header, functions] of Object.entries(currentType.list)) {
-    htmlList += `<tr><thead><th><h1>${header}</h1><th></thead></tr>`;
+    htmlList += `<tr><thead><th><h1 class="app">${header}</h1><th></thead></tr>`;
     for (const functionName of functions) {
       htmlList += `<tr><tbody><td><h4 style="display: inline">${functionName}: </h4></td>`;
       const urlList = await currentType.links(functionName);
       urlList.map((currentItem)=>{
-        return htmlList += `<td><a style="letter-spacing: 1px;" href="https://us-east-1.console.aws.amazon.com${currentItem.url}">${currentItem.label}</a></td>`;
+        return htmlList += `<td><a class="link" style="letter-spacing: 1px;" href="https://us-east-1.console.aws.amazon.com${currentItem.url}">${currentItem.label}</a></td>`;
       });
     }
     htmlList += `</tr></tbody>`
@@ -118,7 +114,7 @@ const currentList = async (typeName, AWS, listType,accessKeyId,secretAccessKey) 
 const getDefaultHtml = (listType, accessKeyId, secretAccessKey) => {
   let defaultHtml = "";
   for (const [type] of Object.entries(listType)) {
-    defaultHtml += `<button href="?view=${type}&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}">${type} List</button>`;
+    defaultHtml += `<a class="button" href="?view=${type}&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}">${type} List</a>`;
   }
   return defaultHtml;
 };
