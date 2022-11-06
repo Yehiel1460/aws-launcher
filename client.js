@@ -20,37 +20,40 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
   .app{
       margin-top: 20px;
   }
-.button{
-  color:black;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 200;
-  letter-spacing: 1px;
-  padding: 13px 20px 13px;
-  outline: 0;
-  border: 1px solid black;
-  cursor: pointer;
-  position: relative;
-  background-color: rgba(0, 0, 0, 0);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-.button:after {
-  content: "";
-  background-color: #ffe54c;
-  width: 100%;
-  z-index: -1;
-  position: absolute;
-  height: 100%;
-  top: 7px;
-  left: 7px;
-  transition: 0.2s;
-}
-.button:hover:after {
-  top: 0px;
-  left: 0px;
-}
+  .button {
+    margin-left: 15px;
+    background: #fff;
+    backface-visibility: hidden;
+    border-radius: .375rem;
+    border-style: solid;
+    border-width: .125rem;
+    box-sizing: border-box;
+    color: #212121;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Circular,Helvetica,sans-serif;
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    line-height: 1.3;
+    padding: .875rem 1.125rem;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transform: translateZ(0) scale(1);
+    transition: transform .2s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .button:not(:disabled):hover {
+    transform: scale(1.05);
+    background-color:#ffe54c;
+  }
+  .button:not(:disabled):hover:active {
+    transform: scale(1.05) translateY(.125rem);
+  }
   .link:link {
   text-decoration: none;
 }
