@@ -14,8 +14,46 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
   <title>aws-launcher</title>
   </head>
   <body>
+  <div>${getDefaultHtml(listType, accessKeyId, secretAccessKey)}</div>
   <table class="mainDiv"></table>
   <style>
+button{
+  font-size: 16px;
+  font-weight: 200;
+  letter-spacing: 1px;
+  padding: 13px 20px 13px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+button:after {
+  content: "";
+  background-color: #ffe54c;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  top: 7px;
+  left: 7px;
+  transition: 0.2s;
+}
+
+button:hover:after {
+  top: 0px;
+  left: 0px;
+}
+
+@media (min-width: 768px) {
+  .button-52 {
+    padding: 13px 50px 13px;
+  }
+}
   a:link {
   text-decoration: none;
 }
@@ -25,7 +63,7 @@ a:visited {
 }
 a:hover {
   text-decoration: underline;
-  background:#66ff66;
+  background:#ffe54c;
 }
 a:active {
   text-decoration: underline;
@@ -62,7 +100,6 @@ const currentList = async (typeName, AWS, listType,accessKeyId,secretAccessKey) 
   const currentType = await listType[typeName]?.(AWS);
   console.log( currentType.list );
   let htmlList = "";
-  htmlList += `<a href="?accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}">Home</a>`;
   for (const [header, functions] of Object.entries(currentType.list)) {
     htmlList += `<tr><thead><th><h1>${header}</h1><th></thead></tr>`;
     for (const functionName of functions) {
@@ -81,7 +118,7 @@ const currentList = async (typeName, AWS, listType,accessKeyId,secretAccessKey) 
 const getDefaultHtml = (listType, accessKeyId, secretAccessKey) => {
   let defaultHtml = "";
   for (const [type] of Object.entries(listType)) {
-    defaultHtml += `<a href="?view=${type}&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}">${type} List</a><br>`;
+    defaultHtml += `<button href="?view=${type}&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}">${type} List</button>`;
   }
   return defaultHtml;
 };
@@ -92,8 +129,7 @@ const getViewResult = async (accessKeyId, secretAccessKey, view) => {
   }
   const listType = { dynamo, lambda, pipeline };
   return (
-    client(view, listType,accessKeyId,secretAccessKey) ||
-    getDefaultHtml(listType, accessKeyId, secretAccessKey)
+    client(view, listType,accessKeyId,secretAccessKey)
   );
 };
 
