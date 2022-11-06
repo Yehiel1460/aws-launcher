@@ -16,8 +16,7 @@ const pipeline = async (AWS) => {
     list: pipelineList,
     links: function (id) {
       return [
-        {label:id ,url:`/codesuite/codepipeline/pipelines/${id}/view?region=us-east-1`},
-        {label:'logs',url:`/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252F${id}/log-events`},
+        {label:'pipeline' ,url:`/codesuite/codepipeline/pipelines/${id}/view?region=us-east-1`}
       ];
     },
   };

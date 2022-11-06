@@ -13,7 +13,7 @@ const dynamo = async (AWS) => {
     list: tableList,
     links: function (id) {
       return [
-        {label:id,url:`/dynamodbv2/home?region=us-east-1#item-explorer?initialTagKey=&table=${id}`},
+        {label:'table',url:`/dynamodbv2/home?region=us-east-1#item-explorer?initialTagKey=&table=${id}`},
         {label:'index',url:`/dynamodbv2/home?region=us-east-1#table?initialTagKey=&name=${id}&tab=indexes`},
       ];
     },
