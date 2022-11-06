@@ -14,16 +14,28 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
   <title>aws-launcher</title>
   </head>
   <body>
-  <div class="mainDiv"></div>
+  <table class="mainDiv"></table>
+  <style>
+  table{
+    display:flex;
+    flex-direction: column;
+  }
+  td{
+  border: 1px solid;
+  width: 150px;
+  padding: 5px;
+  text-align: left;
+  }
+  </style>
   <script type="text/javascript">if (localStorage.getItem('${typeName}') != '${currentType}') {
   localStorage.setItem('${typeName}', '${currentType}');
-    const div = document.querySelector(".mainDiv")
+    const table = document.querySelector(".mainDiv")
   let getFromLocalStorage = localStorage.getItem('${typeName}');
-  div.innerHTML = getFromLocalStorage;
+  table.innerHTML = getFromLocalStorage;
   } else {
-  const div = document.querySelector(".mainDiv")
+  const table = document.querySelector(".mainDiv")
   let getFromLocalStorage = localStorage.getItem('${typeName}');
-  div.innerHTML = getFromLocalStorage;
+  table.innerHTML = getFromLocalStorage;
   }
   </script>
   </body>
@@ -38,14 +50,15 @@ const currentList = async (typeName, AWS, listType,accessKeyId,secretAccessKey) 
   let htmlList = "";
   htmlList += `<a href="?accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}">Home</a>`;
   for (const [header, functions] of Object.entries(currentType.list)) {
-    htmlList += `<h1>${header}</h1><br>`;
+    htmlList += `<tr><thead><th><h1>${header}</h1><th></thead></tr>`;
     for (const functionName of functions) {
-      htmlList += `<br>`;
+      htmlList += `<tr><tbody><td><h4 style="display: inline">${functionName}: </h4></td>`;
       const urlList = await currentType.links(functionName);
       urlList.map((currentItem)=>{
-        return htmlList += `<a style="letter-spacing: 1px;" href="https://us-east-1.console.aws.amazon.com${currentItem.url}">${currentItem.label}</a> - `;
-      }); 
+        return htmlList += `<td><a style="letter-spacing: 1px;" href="https://us-east-1.console.aws.amazon.com${currentItem.url}">${currentItem.label}</a></td>`;
+      });
     }
+    htmlList += `</tr></tbody>`
   } 
   console.log({ htmlList });
   return htmlList;
