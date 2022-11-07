@@ -14,19 +14,24 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
   <title>aws-launcher</title>
   </head>
   <body>
+  <div class="container">
   <h1 class="page_header">AWS launcher</h1>
   <nav>${getDefaultHtml(listType, accessKeyId, secretAccessKey,typeName)}</nav>
-    <input type="text" name="search" placeholder="Search">
+  <input type="text" name="search" placeholder="Search">
+  </div>
   <table class="mainDiv"></table>
   <style>
+  .container{
+    margin-left: 120px;
+  }
   .page_header{
-    margin-left:10%;
+    padding-left:80px;
   }
   nav{
     margin-bottom: 20px;
   }
   input {
-    margin-left: 7%;
+    margin-left: 40px;
     background-color: #fff;
     border: 2px solid #212121;
     width: 300px;
