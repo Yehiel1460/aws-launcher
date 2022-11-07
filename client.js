@@ -144,7 +144,7 @@ const getDefaultHtml = (listType, accessKeyId, secretAccessKey,typeName) => {
   let defaultHtml = "";
   for (const [type] of Object.entries(listType)) {
     const test = typeName === type? '#ffe54c': '#fff';
-    defaultHtml += `<a style="background-color:${test}" class="button" href="?view=${type}&accessKeyId=${accessKeyId}&secretAccessKey=${encodeURIComponent(secretAccessKey)}">${type} List</a>`;
+    defaultHtml += `<a style="background-color:${test}" class="button" href="?view=${type}&accessKeyId=${accessKeyId}&secretAccessKey=${encodeURIComponent(secretAccessKey)}">${type}</a>`;
   }
   return defaultHtml;
 };
