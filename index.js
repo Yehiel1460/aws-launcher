@@ -7,7 +7,7 @@ exports.handler = async (event) => {
     view: event.queryStringParameters.view,
   };
   const accessKeyId = event.queryStringParameters.accessKeyId;
-  const secretAccessKey = event.queryStringParameters.secretAccessKey;
+  const secretAccessKey = encodeURIComponent(event.queryStringParameters.secretAccessKey);
   AWS.config.update({
     MasterRegion: "us-east-1",
     accessKeyId: accessKeyId,

@@ -14,9 +14,32 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
   <title>aws-launcher</title>
   </head>
   <body>
-  <div>${getDefaultHtml(listType, accessKeyId, secretAccessKey)}</div>
+  <nav>${getDefaultHtml(listType, accessKeyId, secretAccessKey)}</nav>
+  <h1>AWS launcher</h1>
+    <input type="text" name="search" placeholder="Search">
   <table class="mainDiv"></table>
   <style>
+  nav{
+    margin-bottom: 20px;
+  }
+  input {
+    margin-left: 15px;
+    background-color: #fff;
+    border: 2px solid #212121;
+    width: 300px;
+    height: 35px;
+    border-radius: 4px;
+    padding: 0 15px;
+  }
+  input:focus {
+    background:#ffe54c;
+  }
+  input::placeholder {
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 10px;
+    color: #212121;
+  }
   .app{
       margin-top: 20px;
   }
@@ -59,7 +82,6 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
 }
 .link:visited {
   text-decoration: none;
-  color:red;
 }
 .link:hover {
   text-decoration: underline;
