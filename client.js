@@ -26,9 +26,6 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
   background: #fff;
   font: 100% system-ui;
 }
-a {
-  color: #0033cc;
-}
 @media (prefers-color-scheme: dark) {
   body {
     color: #eee;
