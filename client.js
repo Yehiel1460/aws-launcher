@@ -14,16 +14,19 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
   <title>aws-launcher</title>
   </head>
   <body>
+  <h1 class="page_header">AWS launcher</h1>
   <nav>${getDefaultHtml(listType, accessKeyId, secretAccessKey)}</nav>
-  <h1>AWS launcher</h1>
     <input type="text" name="search" placeholder="Search">
   <table class="mainDiv"></table>
   <style>
+  .page_header{
+    margin-left:10%;
+  }
   nav{
     margin-bottom: 20px;
   }
   input {
-    margin-left: 15px;
+    margin-left: 7%;
     background-color: #fff;
     border: 2px solid #212121;
     width: 300px;
@@ -42,6 +45,7 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
   }
   .app{
       margin-top: 20px;
+      margin-left: 10%;
   }
   .button {
     margin-left: 15px;
@@ -69,7 +73,6 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
     -webkit-user-select: none;
     touch-action: manipulation;
   }
-  
   .button:not(:disabled):hover {
     transform: scale(1.05);
     background-color:#ffe54c;
@@ -140,7 +143,7 @@ const currentList = async (typeName, AWS, listType) => {
 const getDefaultHtml = (listType, accessKeyId, secretAccessKey) => {
   let defaultHtml = "";
   for (const [type] of Object.entries(listType)) {
-    defaultHtml += `<a class="button" href="?view=${type}&accessKeyId=${accessKeyId}&secretAccessKey=${secretAccessKey}">${type} List</a>`;
+    defaultHtml += `<a class="button" href="?view=${type}&accessKeyId=${accessKeyId}&secretAccessKey=${encodeURIComponent(secretAccessKey)}">${type} List</a>`;
   }
   return defaultHtml;
 };
