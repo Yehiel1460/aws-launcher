@@ -15,7 +15,7 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
   </head>
   <body>
   <h1 class="page_header">AWS launcher</h1>
-  <nav>${getDefaultHtml(listType, accessKeyId, secretAccessKey)}</nav>
+  <nav>${getDefaultHtml(listType, accessKeyId, secretAccessKey,typeName)}</nav>
     <input type="text" name="search" placeholder="Search">
   <table class="mainDiv"></table>
   <style>
@@ -140,10 +140,11 @@ const currentList = async (typeName, AWS, listType) => {
   return htmlList;
 };
 
-const getDefaultHtml = (listType, accessKeyId, secretAccessKey) => {
+const getDefaultHtml = (listType, accessKeyId, secretAccessKey,typeName) => {
   let defaultHtml = "";
   for (const [type] of Object.entries(listType)) {
-    defaultHtml += `<a class="button" href="?view=${type}&accessKeyId=${accessKeyId}&secretAccessKey=${encodeURIComponent(secretAccessKey)}">${type} List</a>`;
+    const test = typeName === type? '#ffe54c': '#fff';
+    defaultHtml += `<a style="background-color:${test}" class="button" href="?view=${type}&accessKeyId=${accessKeyId}&secretAccessKey=${encodeURIComponent(secretAccessKey)}">${type} List</a>`;
   }
   return defaultHtml;
 };
