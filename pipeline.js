@@ -4,12 +4,12 @@ const pipeline = async (AWS) => {
   const pipeLinesParams = {};
   let pipelineData = await pipeLine.listPipelines(pipeLinesParams).promise();
   let pipelineList = {
-    pipelinesList: [],
+    pipelines: [],
   };
 
   for (const [header, functions] of Object.entries(pipelineData)){
     for (const functionName of functions) {
-      pipelineList.pipelinesList.push([functionName.name])
+      pipelineList.pipelines.push([functionName.name])
     }
   }
   const res = {

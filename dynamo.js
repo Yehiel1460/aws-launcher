@@ -4,10 +4,10 @@ const dynamo = async (AWS) => {
   let tableParams = {};
   const tableData = await dynamo.listTables(tableParams).promise();
   let tableList = {
-    TablesList: [],
+    tables: [],
   };
   tableData.TableNames.map((item) => {
-    return tableList.TablesList.push([item]);
+    return tableList.tables.push([item]);
   });
   const res = {
     list: tableList,
