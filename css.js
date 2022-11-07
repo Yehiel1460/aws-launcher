@@ -1,4 +1,4 @@
-const css = async () => {
+const css = () => {
   const res = `
 body {
     color: #222;
