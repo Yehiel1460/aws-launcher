@@ -70,8 +70,12 @@ const getDefaultHtml = (listType, accessKeyId, secretAccessKey,typeName) => {
 };
 
 const getViewResult = async (accessKeyId, secretAccessKey, view) => {
-  if (!accessKeyId) {
-    return "<p>Please enter accessKeyId and secretAccessKey</p>";
+  if (!accessKeyId || !secretAccessKey) {
+    return `<div>
+    <input type="text" placeholder="Enter Access Key Id">
+    <input type="text" placeholder="Enter Secret Access Key">
+    <button>Login</button>
+    <div>`
   }
   const listType = { dynamo, lambda, pipeline };
   return (
