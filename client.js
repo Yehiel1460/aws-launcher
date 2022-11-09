@@ -5,7 +5,7 @@ const { pipeline } = require("./pipeline.js");
 const { css } = require("./css.js");
 
 const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
-  const currentType = await currentList(typeName, AWS, listType,accessKeyId,secretAccessKey);
+  // const currentType = await currentList(typeName, AWS, listType,accessKeyId,secretAccessKey);
   let html = `
   <html lang="en">
   <head>
@@ -23,16 +23,29 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
   <style>
   ${css()}
   </style>
-  <script type="text/javascript">if (localStorage.getItem('${typeName}') != '${currentType}') {
-  localStorage.setItem('${typeName}', '${currentType}');
-    const table = document.querySelector(".mainDiv")
-  let getFromLocalStorage = localStorage.getItem('${typeName}');
-  table.innerHTML = getFromLocalStorage;
-  } else {
-  const table = document.querySelector(".mainDiv")
-  let getFromLocalStorage = localStorage.getItem('${typeName}');
-  table.innerHTML = getFromLocalStorage;
+  <script type="text/javascript">
+  const getFromLocalStorage = async() =>{
+    const localStorageTime = localStorage.getItem(expierdLocalStorage);
+    const now = new Date('2022-06-19');
+    if(localStorageTime.getFullYear() === now.getFullYear() &&
+    localStorageTime.getMonth() === now.getMonth() &&
+    localStorageTime.getDate() === now.getDate()){
+      if (localStorage.getItem('${typeName}') != '${currentType}') {
+        localStorage.setItem('${typeName}', '${currentType}');
+          const table = document.querySelector(".mainDiv")
+        let getFromLocalStorage = localStorage.getItem('${typeName}');
+        return table.innerHTML = getFromLocalStorage;
+        } else {
+        const table = document.querySelector(".mainDiv")
+        let getFromLocalStorage = localStorage.getItem('${typeName}');
+        return table.innerHTML = getFromLocalStorage;
+        }
+    }
+    else{
+      currentType = await currentList(typeName, AWS, listType,accessKeyId,secretAccessKey);
+    }
   }
+  getFromLocalStorage()
   </script>
   </body>
   </html>
