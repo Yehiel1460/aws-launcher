@@ -2,7 +2,7 @@ const AWS = require("aws-sdk");
 const { lambda } = require("./lambda.js");
 const { dynamo } = require("./dynamo.js");
 const { pipeline } = require("./pipeline.js");
-const { css } = require("./css.js")
+const { css } = require("./css.js");
 
 const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
   const currentType = await currentList(typeName, AWS, listType,accessKeyId,secretAccessKey);
@@ -54,7 +54,7 @@ const currentList = async (typeName, AWS, listType) => {
         return htmlList += `<td><a class="link" style="letter-spacing: 1px;" href="https://us-east-1.console.aws.amazon.com${currentItem.url}">${currentItem.label}</a></td>`;
       });
     }
-    htmlList += `</tr></tbody>`
+    htmlList += `</tr></tbody>`;
   } 
   console.log({ htmlList });
   return htmlList;
@@ -75,7 +75,7 @@ const getViewResult = async (accessKeyId, secretAccessKey, view) => {
     <input type="text" placeholder="Enter Access Key Id">
     <input type="text" placeholder="Enter Secret Access Key">
     <button>Login</button>
-    <div>`
+    <div>`;
   }
   const listType = { dynamo, lambda, pipeline };
   return (
