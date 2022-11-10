@@ -5,8 +5,6 @@ const { pipeline } = require("./pipeline.js");
 const { css } = require("./css.js");
 
 const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
-  // const currentType = await currentList(typeName, AWS, listType,accessKeyId,secretAccessKey);
-  let currentType = ''
   let html = `
   <html lang="en">
   <head>
@@ -26,7 +24,8 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
   </style>
   <script type="text/javascript">
   const getFromLocalStorage = async() =>{
-    const localStorageTime = localStorage.getItem("expierdLocalStorage");
+    const getTime = localStorage.getItem("expierdLocalStorage");
+    const localStorageTime = new Date(getTime)
     const now = new Date();
     if(localStorageTime?.getFullYear() === now.getFullYear() &&
     localStorageTime.getMonth() === now.getMonth() &&
@@ -37,8 +36,7 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
     }
     else{
     localStorage.setItem('expierdLocalStorage', new Date());
-    ${currentType = await currentList(typeName, AWS, listType,accessKeyId,secretAccessKey)}
-    localStorage.setItem('${typeName}', '${currentType}');
+    localStorage.setItem('${typeName}', '${await currentList(typeName, AWS, listType,accessKeyId,secretAccessKey)}');
     const table = document.querySelector(".mainDiv")
     let getFromLocalStorage = localStorage.getItem('${typeName}');
     return table.innerHTML = getFromLocalStorage;
