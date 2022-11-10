@@ -79,7 +79,7 @@ table{
 }
 td{
     border: 1px solid;
-    width: 150px;
+    width: 220px;
     padding: 5px;
     text-align: left;
 }`;
