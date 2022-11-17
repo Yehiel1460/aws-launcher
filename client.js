@@ -50,6 +50,45 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
   return html;
 };
 
+const cacheTrueOrFalse = (cache,accessKeyId,secretAccessKey,view)=>{
+  if (cache === false){
+    return getViewResult(accessKeyId, secretAccessKey,view);
+  }
+  else{
+    const listType = { dynamo, lambda, pipeline };
+    let html = `
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aws-launcher</title>
+    </head>
+    <body>
+    <div class="container">
+    <h1 class="page_header">AWS launcher</h1>
+    <nav>${getDefaultHtml(listType, accessKeyId, secretAccessKey,view)}</nav>
+    </div>
+    <table class="mainDiv"></table>
+    <style>
+    ${css()}
+    </style>
+    <script type="text/javascript">
+    const getFromLocalStorage = async() =>{
+      const getTime = localStorage.getItem("expierdLocalStorage");
+      const table = document.querySelector(".mainDiv")
+      let getFromLocalStorage = localStorage.getItem('${view}');
+      return table.innerHTML = getFromLocalStorage;
+    }
+    getFromLocalStorage()
+    </script>
+    </body>
+    </html>
+    `;
+   return html;
+  }
+};
+
 const currentList = async (typeName, AWS, listType) => {
   const currentType = await listType[typeName]?.(AWS);
   console.log( currentType.list );
@@ -94,5 +133,5 @@ const getViewResult = async (accessKeyId, secretAccessKey, view) => {
 };
 
 module.exports = {
-  getViewResult: getViewResult,
+  cacheTrueOrFalse: cacheTrueOrFalse,
 };

@@ -1,10 +1,12 @@
 const AWS = require("aws-sdk");
-const { getViewResult } = require("./client.js");
+const { cacheTrueOrFalse } = require("./client.js");
 
 exports.handler = async (event) => {
   console.log({ event });
   const viewValue = {
     view: event.queryStringParameters.view,
+    cache: event.queryStringParameters.cache,
+
   };
   const accessKeyId = event.queryStringParameters.accessKeyId;
   const secretAccessKey = event.queryStringParameters.secretAccessKey;
@@ -13,11 +15,10 @@ exports.handler = async (event) => {
     accessKeyId: accessKeyId,
     secretAccessKey: decodeURI(secretAccessKey),
   });
-
   try {
     const response = {
       statusCode: 200,
-      body: await getViewResult(accessKeyId, secretAccessKey, viewValue.view),
+      body: await cacheTrueOrFalse(viewValue.cache,accessKeyId,secretAccessKey,viewValue.view),
       headers: {
         "Content-Type": "text/html",
       },
