@@ -4,7 +4,7 @@ const { dynamo } = require("./dynamo.js");
 const { pipeline } = require("./pipeline.js");
 const { css } = require("./css.js");
 
-const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
+const client = async (typeName, listType,accessKeyId,secretAccessKey,cache) => {
   let html = `
   <html lang="en">
   <head>
@@ -16,7 +16,7 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
   <body>
   <div class="container">
   <h1 class="page_header">AWS launcher</h1>
-  <nav>${getDefaultHtml(listType, accessKeyId, secretAccessKey,typeName)}</nav>
+  <nav>${getDefaultHtml(listType, accessKeyId, secretAccessKey,typeName,cache)}</nav>
   </div>
   <table class="mainDiv"></table>
   <style>
@@ -52,7 +52,7 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
 
 const cacheTrueOrFalse = (cache,accessKeyId,secretAccessKey,view)=>{
   if (!cache){
-    return getViewResult(accessKeyId, secretAccessKey,view);
+    return getViewResult(accessKeyId, secretAccessKey,view,cache);
   }
   else{
     const listType = { dynamo, lambda, pipeline };
@@ -117,7 +117,7 @@ const getDefaultHtml = (listType, accessKeyId, secretAccessKey,typeName,cache) =
   return defaultHtml;
 };
 
-const getViewResult = async (accessKeyId, secretAccessKey, view) => {
+const getViewResult = async (accessKeyId, secretAccessKey, view,cache) => {
   if (!accessKeyId || !secretAccessKey) {
     return `<form onsubmit="window.location = window.location + ?view="view.value"&accessKeyId=accessKeyId.value&secretAccessKey=encodeURIComponent(secretAccessKey.value)">
     <input style="display:none;" id="view" value="lambda" type="search" name="view"></input>
@@ -129,7 +129,7 @@ const getViewResult = async (accessKeyId, secretAccessKey, view) => {
   }
   const listType = { dynamo, lambda, pipeline };
   return (
-    client(view, listType,accessKeyId,secretAccessKey)
+    client(view, listType,accessKeyId,secretAccessKey,cache)
   );
 };
 
