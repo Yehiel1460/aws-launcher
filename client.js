@@ -121,6 +121,7 @@ const getViewResult = async (accessKeyId, secretAccessKey, view) => {
   if (!accessKeyId || !secretAccessKey) {
     return `<form onsubmit="window.location = window.location + ?view="view.value"&accessKeyId=accessKeyId.value&secretAccessKey=encodeURIComponent(secretAccessKey.value)">
     <input style="display:none;" id="view" value="lambda" type="search" name="view"></input>
+    <input style="display:none;" id="cache" value="false" type="search" name="cache"></input>
     <input id="accessKeyId" placeholder="Enter Access Key Id" type="search" name="accessKeyId" required></input>
     <input id="secretAccessKey" placeholder="Enter Secret Access Key" type="search" name="secretAccessKey" required></input>
     <button style="cursor:pointer">Get Link</button>
