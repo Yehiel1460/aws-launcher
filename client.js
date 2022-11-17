@@ -108,7 +108,7 @@ const currentList = async (typeName, AWS, listType) => {
   return htmlList;
 };
 
-const getDefaultHtml = (listType, accessKeyId, secretAccessKey,typeName) => {
+const getDefaultHtml = (listType, accessKeyId, secretAccessKey,typeName,cache) => {
   let defaultHtml = "";
   for (const [type] of Object.entries(listType)) {
     const changeColorByType = typeName === type? '#ffe54c': '#fff';
