@@ -6,7 +6,6 @@ exports.handler = async (event) => {
   const viewValue = {
     view: event.queryStringParameters.view,
     cache: event.queryStringParameters.cache,
-
   };
   const accessKeyId = event.queryStringParameters.accessKeyId;
   const secretAccessKey = event.queryStringParameters.secretAccessKey;
