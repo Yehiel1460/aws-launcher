@@ -51,10 +51,10 @@ const client = async (typeName, listType,accessKeyId,secretAccessKey) => {
 };
 
 const cacheTrueOrFalse = (cache,accessKeyId,secretAccessKey,view)=>{
-  if (cache === false){
+  if (!cache){
     return getViewResult(accessKeyId, secretAccessKey,view);
   }
-  else if(cache === true){
+  else{
     const listType = { dynamo, lambda, pipeline };
     let html = `
     <html lang="en">
@@ -67,7 +67,7 @@ const cacheTrueOrFalse = (cache,accessKeyId,secretAccessKey,view)=>{
     <body>
     <div class="container">
     <h1 class="page_header">AWS launcher</h1>
-    <nav>${getDefaultHtml(listType, accessKeyId, secretAccessKey,view)}</nav>
+    <nav>${getDefaultHtml(listType, accessKeyId, secretAccessKey,view,cache)}</nav>
     </div>
     <table class="mainDiv"></table>
     <style>
@@ -112,7 +112,7 @@ const getDefaultHtml = (listType, accessKeyId, secretAccessKey,typeName) => {
   let defaultHtml = "";
   for (const [type] of Object.entries(listType)) {
     const changeColorByType = typeName === type? '#ffe54c': '#fff';
-    defaultHtml += `<a style="background-color:${changeColorByType}" class="button" href="?view=${type}&accessKeyId=${accessKeyId}&secretAccessKey=${encodeURIComponent(secretAccessKey)}">${type}</a>`;
+    defaultHtml += `<a style="background-color:${changeColorByType}" class="button" href="?view=${type}&cache="${cache}"&accessKeyId=${accessKeyId}&secretAccessKey=${encodeURIComponent(secretAccessKey)}">${type}</a>`;
   }
   return defaultHtml;
 };
