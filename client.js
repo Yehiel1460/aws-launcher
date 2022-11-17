@@ -54,7 +54,7 @@ const cacheTrueOrFalse = (cache,accessKeyId,secretAccessKey,view)=>{
   if (cache === false){
     return getViewResult(accessKeyId, secretAccessKey,view);
   }
-  else{
+  else if(cache === true){
     const listType = { dynamo, lambda, pipeline };
     let html = `
     <html lang="en">
